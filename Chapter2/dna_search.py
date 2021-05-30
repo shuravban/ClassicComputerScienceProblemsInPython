@@ -1,3 +1,6 @@
+# MY: Just a binary search. 1. No need for IntEnum - simple Enum enough
+# 2. My str2gene is better
+
 # dna_search.py
 # From Classic Computer Science Problems in Python Chapter 2
 # Copyright 2018 David Kopec
@@ -33,6 +36,18 @@ def string_to_gene(s: str) -> Gene:
         gene.append(codon)  # add codon to gene
     return gene
 
+
+def my_str2gene(s: str) -> Gene:
+    step = CodonLength
+    # standard way of partition - ignore remainder: [1,2,3,4,5] -> [[1,2,3]]
+    chunks  = [s[i*step : (i+1)*step] for i in range(len(s)//step)]
+    # if not ignore:
+    # s[i:i+step] for i in range(0, len(s), step)
+
+    # return [(Nucleotide[x], Nucleotide[y], Nucleotide[z]) for x,y,z in chunks]
+    # but it's better: it scales
+    return [tuple(Nucleotide[x] for x in chunk)
+                                    for chunk in chunks]
 
 my_gene: Gene = string_to_gene(gene_str)
 
